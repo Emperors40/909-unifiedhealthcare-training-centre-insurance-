@@ -4,18 +4,47 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>AI Production Line Optimization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .team-members {
+            list-style-type: none;
+            padding: 0;
+        }
+        .team-member {
+            margin-bottom: 10px;
+        }
+        .team-member strong {
+            color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>AI Production Line Optimization</h1>
-    <p>Welcome to the AI Driven Production Line Specialists Overview.</p>
+    <p>Welcome to the AI Driven Production Line Specialists Overview. Interact and learn about how each team member can assist in optimizing production processes.</p>
     <h2>Teams</h2>
     <h3>Team 1: Design and Production Line Specialists</h3>
-    <ul>
-        <li><strong>Agent Alpha:</strong> Expert in designing production lines for automotive manufacturing.</li>
-        <li><strong>Agent Bravo:</strong> Specializes in designing production lines for aerospace engineering.</li>
-        <li><strong>Agent Charlie:</strong> Focuses on designing production lines for consumer goods manufacturing.</li>
-        <li><strong>Agent Delta:</strong> Expert in designing production lines for pharmaceutical manufacturing.</li>
+    <ul class='team-members'>
+        <li class='team-member' onclick='showDetails(\'Alpha\')'><strong>Agent Alpha:</strong> Expert in designing production lines for automotive manufacturing.</li>
+        <li class='team-member' onclick='showDetails(\'Bravo\')'><strong>Agent Bravo:</strong> Specializes in designing production lines for aerospace engineering.</li>
+        <li class='team-member' onclick='showDetails(\'Charlie\')'><strong>Agent Charlie:</strong> Focuses on designing production lines for consumer goods manufacturing.</li>
+        <li class='team-member' onclick='showDetails(\'Delta\')'><strong>Agent Delta:</strong> Expert in designing production lines for pharmaceutical manufacturing.</li>
     </ul>
     <p>Each team member contributes unique expertise to tackle complex design challenges in various sectors.</p>
+
+    <script>
+        function showDetails(agent) {
+            alert('Learn more about ' + agent + '! Detailed insights coming soon...');
+            // Extend with dynamic data fetching and display logic as needed
+        }
+    </script>
 </body>
 </html>
