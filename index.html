@@ -48,3 +48,43 @@
     </script>
 </body>
 </html>
+
+<script src="model_code.py"></script>
+
+
+<!-- Form inputs for customizing AI queries -->
+<section>
+ <h2>Customize Your AI Interaction</h2>
+ <form id="aiQueryForm">
+ <label for="query">Enter your query:</label>
+ <input type="text" id="query" name="query" required>
+ <button type="submit">Submit</button>
+ </form>
+ <div id="agentInfo"></div>
+</section>
+
+
+<script>
+ document.getElementById("aiQueryForm").addEventListener("submit", function(event) {
+ event.preventDefault();
+ const query = document.getElementById("query").value;
+ fetchAgentInformation(query);
+ });
+
+ function fetchAgentInformation(query) {
+ fetch(`https://api.example.com/agent?query=${query}`)
+ .then(response => response.json())
+ .then(data => {
+ displayAgentInformation(data);
+ })
+ .catch(error => {
+ console.error("Error fetching agent information:", error);
+ });
+ }
+
+ function displayAgentInformation(data) {
+ const agentInfoDiv = document.getElementById("agentInfo");
+ agentInfoDiv.innerHTML = `<h3>Agent Information</h3><p>${JSON.stringify(data)}</p>`;
+ }
+</script>
+
