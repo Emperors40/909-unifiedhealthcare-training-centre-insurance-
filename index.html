@@ -1,90 +1,43 @@
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>AI Production Line Optimization</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background-color: #f7f7f7;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        .team-members {
-            list-style-type: none;
-            padding: 0;
-        }
-        .team-member {
-            margin-bottom: 10px;
-        }
-        .team-member strong {
-            color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <h1>AI Production Line Optimization</h1>
-    <p>Welcome to the AI Driven Production Line Specialists Overview. Interact and learn about how each team member can assist in optimizing production processes.</p>
-    <h2>Teams</h2>
-    <h3>Team 1: Design and Production Line Specialists</h3>
-    <ul class='team-members'>
-        <li class='team-member' onclick='showDetails(\'Alpha\')'><strong>Agent Alpha:</strong> Expert in designing production lines for automotive manufacturing.</li>
-        <li class='team-member' onclick='showDetails(\'Bravo\')'><strong>Agent Bravo:</strong> Specializes in designing production lines for aerospace engineering.</li>
-        <li class='team-member' onclick='showDetails(\'Charlie\')'><strong>Agent Charlie:</strong> Focuses on designing production lines for consumer goods manufacturing.</li>
-        <li class='team-member' onclick='showDetails(\'Delta\')'><strong>Agent Delta:</strong> Expert in designing production lines for pharmaceutical manufacturing.</li>
-    </ul>
-    <p>Each team member contributes unique expertise to tackle complex design challenges in various sectors.</p>
-
-    <script>
-        function showDetails(agent) {
-            alert('Learn more about ' + agent + '! Detailed insights coming soon...');
-            // Extend with dynamic data fetching and display logic as needed
-        }
-    </script>
-</body>
-</html>
-
-<script src="model_code.py"></script>
-
-
-<!-- Form inputs for customizing AI queries -->
 <section>
- <h2>Customize Your AI Interaction</h2>
- <form id="aiQueryForm">
- <label for="query">Enter your query:</label>
- <input type="text" id="query" name="query" required>
- <button type="submit">Submit</button>
- </form>
- <div id="agentInfo"></div>
+    <h2>Interact with AI Model</h2>
+    <div>
+        <input type="text" id="prompt" placeholder="Type your question here..." />
+        <button onclick="submitPrompt()">Send</button>
+    </div>
+    <div id="buttonPanel">
+        <button onclick="fillPrompt('Tell me a joke')">Tell me a joke</button>
+        <button onclick="fillPrompt('What\'s the weather today?')">Weather Today</button>
+        <button onclick="fillPrompt('How does AI work?')">How AI Works</button>
+    </div>
+    <div id="streamingResponse"><strong>Response:</strong> <span id="agentResponse"></span></div>
+    <div id="loadingIndicator" style="display:none;">Loading...</div>
 </section>
 
-
 <script>
- document.getElementById("aiQueryForm").addEventListener("submit", function(event) {
- event.preventDefault();
- const query = document.getElementById("query").value;
- fetchAgentInformation(query);
- });
+    function submitPrompt() {
+        let query = document.getElementById("prompt").value;
+        document.getElementById("loadingIndicator").style.display = "block";
+        fetchAgentInformation(query);
+    }
 
- function fetchAgentInformation(query) {
- fetch(`https://api.example.com/agent?query=${query}`)
- .then(response => response.json())
- .then(data => {
- displayAgentInformation(data);
- })
- .catch(error => {
- console.error("Error fetching agent information:", error);
- });
- }
+    function fillPrompt(text) {
+        document.getElementById("prompt").value = text;
+    }
 
- function displayAgentInformation(data) {
- const agentInfoDiv = document.getElementById("agentInfo");
- agentInfoDiv.innerHTML = `<h3>Agent Information</h3><p>${JSON.stringify(data)}</p>`;
- }
+    async function fetchAgentInformation(query) {
+        const response = await fetch(`https://api.example.com/agent?query=${query}`);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let agentResponseEl = document.getElementById("agentResponse");
+        agentResponseEl.textContent = "";
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            agentResponseEl.textContent += chunk;
+        }
+
+        document.getElementById("loadingIndicator").style.display = "none";
+    }
 </script>
-
